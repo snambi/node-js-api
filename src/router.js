@@ -12,14 +12,16 @@ const router = async function( req, res){
         const input = await utils.getParams(urlParts.query);
         
         // call the teams api
-        const data = service.getMatches( input.team, input.year);
-        console.log(data);
-        console.log(service.sayHello("xx"));
+        const total = await service.getMatches( input.team, input.year);
+        console.log("total: "+ total);
+        //console.log(service.sayHello("xx"));
 
         // set the status code and content type
         res.writeHead( 200, { 'Content-Type': 'application/json'})
 
         // send data
+        const data = { total_goals: total, team: input.team, year: input.year};
+        console.log( data);
         res.end( JSON.stringify(data));
     }
 };
